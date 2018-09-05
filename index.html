@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <!-- materialize -->
+    <!-- materialize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
-            <!-- fontawesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
-
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
 
     <title>Meal & calory tracker</title>
 </head>
+
 <body>
+    <!-- navbar -->
     <nav class="nav-wrapper blue">
         <div class="container">
             <a href="#" class="brand-logo center">Calory tracker</a>
@@ -25,43 +27,72 @@
         </div>
     </nav>
     <br>
+    <!-- form card -->
     <div class="container">
         <div class="card">
             <div class="card-content">
-            <span class="card-title"> Add meal / Food</span>        
-            <form class="call">
-                <div class="row">
-                    <div class="input-field col s6">
-                        <input type="text" name="" id="item-name" placeholder="Add Item">
-                        <label for="item-name">Meal</label>
-                    </div>
-                    <div class="input-field col s6">
+                <span class="card-title"> Add meal / Food</span>
+                <form class="call">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" name="" id="item-name" placeholder="Add Item">
+                            <label for="item-name">Meal</label>
+                        </div>
+                        <div class="input-field col s6">
                             <input type="text" name="" id="item-calories" placeholder="Add calories">
                             <label for="item-calories">Calories</label>
-                    </div>
-                    <button class="add-btn btn blue darken-3">
-							<i class="fa fa-plus"></i> Add Meal</button>
-						<!-- <button class="update-btn btn orange">
-							<i class="fa fa-pencil-square-o"></i> Update Meal</button>
+                        </div>
+                        <button class="add-btn btn blue darken-3">
+                            <i class="fa fa-plus"> Add Meal</i></button>
+                        <!-- <button class="update-btn btn orange">
+							<i class="fa fa-pencil-square-o"> Update Meal</i></button>
 						<button class="delete-btn btn red">
-							<i class="fa fa-remove"></i> Delete Meal</button> -->
-						<button class="back-btn btn grey pull-right">
-							<i class="fa fa-chevron-circle-left"></i> Back</button>
-                </div>
-            </form>
+							<i class="fa fa-remove"> Delete Meal</i></button> -->
+                        <button class="back-btn btn grey pull-right">
+                            <i class="fa fa-chevron-circle-left"> Back</i></button>
+                    </div>
+                </form>
             </div>
         </div>
+        <!-- Calorie Count -->
+        <h3 class="center-align">Total Calories:
+            <span class="total-calories">0</span>
+        </h3>
+
+        <!-- Item List -->
+        <ul id="item-list" class="collection">
+            <li class="collection-item" data-id="item-0">
+                <strong>Steak Dinner: </strong> <em>1200 Calories</em>
+                <a href="#" class="secondary-content">
+                    <i class="edit-item fa fa-pencil"></i>
+                </a>
+            </li>
+            <li class="collection-item" data-id="item-1">
+                <strong>Cookie: </strong> <em>400 Calories</em>
+                <a href="#" class="secondary-content">
+                    <i class="edit-item fa fa-pencil"></i>
+                </a>
+            </li>
+            <li class="collection-item" data-id="item-2">
+                <strong>Eggs: </strong> <em>300 Calories</em>
+                <a href="#" class="secondary-content">
+                    <i class="edit-item fa fa-pencil"></i>
+                </a>
+            </li>
+        </ul>
     </div>
 
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+        </script>
 
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js">
+    </script>
 
     <script src="app.js"></script>
 
 </body>
+
 </html>
