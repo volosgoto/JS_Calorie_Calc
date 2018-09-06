@@ -28,6 +28,21 @@ let ItemController = (function () {
             return data.items;
         },
 
+        addItem : function (name, calories) {
+            // console.log(name, calories);
+            // Create id
+            let id;
+
+            if (data.items.length > 0) {
+                id = data.items[data.items.length - 1].id + 1;
+            } else {
+                id = 0;
+            };
+
+            // Calories to number
+
+        },
+
         logData: () => {
             return data;
         }
@@ -89,7 +104,12 @@ let AppController = (function (ItemController, UIController) {
             // console.log('Add Meal');
             // Get form input from IU controller
             let input = UIController.getItemInput();
-            console.log(input);
+            // Check for name and calories input
+            if (input.name !== '' && input.calories !== '') {
+                // console.log(input.name, input.calories); 
+                // Add item
+                let newItem = ItemController.addItem(input.name, input.calories);
+            }
             
             e.preventDefault();
         }
