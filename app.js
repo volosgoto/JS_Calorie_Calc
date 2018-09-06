@@ -24,7 +24,7 @@ let ItemController = (function () {
 
     // Public methods
     return {
-        getItems: () => {
+        getItems: function () {
             return data.items;
         },
 
@@ -76,9 +76,9 @@ let UIController = (function () {
                 html += `
                     <li class="collection-item" data-id="item-${item.id}">
                         <strong>${item.name}: </strong> <em>${item.calories} Calories</em>
-                        <a href="#" class="secondary-content">
-						<i class="edit-item fa fa-pencil"></i>
-					</a>
+                            <a href="#" class="secondary-content">
+						        <i class="edit-item fa fa-pencil"></i>
+					        </a>
                     </li>
                     `;
             });
@@ -93,6 +93,26 @@ let UIController = (function () {
                 name: document.querySelector(UISelectors.itemNameInput).value,
                 calories: document.querySelector(UISelectors.itemCaloriesInput).value
             }
+        },
+        addListItem: function (item) {
+            // Create li element
+            let li = document.createElement('li');
+            
+            // Add class to li
+            li.className = 'collection-item';
+            li.id = `item-${item.id}`;
+
+            // Add HTML
+            li.innerHTML = `
+                <strong>${item.name}: </strong> <em>${item.calories} Calories</em>
+                <a href="#" class="secondary-content">
+                    <i class="edit-item fa fa-pencil"></i>
+                </a>
+            `;
+            
+            // Insert item
+            document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
+            
         }
     }
 })();
@@ -117,6 +137,8 @@ let AppController = (function (ItemController, UIController) {
                 // console.log(input.name, input.calories); 
                 // Add item
                 let newItem = ItemController.addItem(input.name, input.calories);
+                // Add item to UI list
+                UIController.addListItem(newItem);
             }
             
             e.preventDefault();
