@@ -40,7 +40,15 @@ let ItemController = (function () {
             };
 
             // Calories to number
+            calories = parseInt(calories);
 
+            // Create new Item
+           let newItem = new Item(id, name, calories);
+
+           // Add to items Array
+           data.items.push(newItem);
+
+           return newItem;
         },
 
         logData: () => {
