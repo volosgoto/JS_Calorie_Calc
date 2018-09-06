@@ -4,8 +4,6 @@
 
 
 // Item Controller
-
-
 let ItemController = (function () {
     // Item Construcror
     function Item(id, name, calories) {
@@ -13,7 +11,6 @@ let ItemController = (function () {
         this.name = name;
         this.calories = calories;
     }
-
     // Data Structure
     let data = {
         items: [
@@ -35,7 +32,6 @@ let ItemController = (function () {
             return data;
         }
     }
-    
 })();
 
 
@@ -43,7 +39,9 @@ let ItemController = (function () {
 let UIController = (function () {
     let UISelectors = {
         itemList: '#item-list',
-        addBtn: '.add-btn'
+        addBtn: '.add-btn',
+        itemNameInput: '#item-name',
+        itemCaloriesInput: '#item-calories'
     };
 
     // Public methods
@@ -66,6 +64,12 @@ let UIController = (function () {
         }, 
         getSelectors: function () {
             return UISelectors;
+        },
+        getItemInput : function () {
+            return {
+                name: document.querySelector(UISelectors.itemNameInput).value,
+                calories: document.querySelector(UISelectors.itemCaloriesInput).value
+            }
         }
     }
 })();
@@ -79,15 +83,16 @@ let AppController = (function (ItemController, UIController) {
         let UISelectors = UIController.getSelectors();
 
         // Add item event
-        document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddFubmit);
+        document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
         // Add item sumbit
-        function itemAddFubmit(e) {
-            console.log('Add Meal');
+        function itemAddSubmit(e) {
+            // console.log('Add Meal');
+            // Get form input from IU controller
+            let input = UIController.getItemInput();
+            console.log(input);
             
             e.preventDefault();
         }
-
-
     };
 
     // Public methods
