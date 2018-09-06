@@ -112,7 +112,10 @@ let UIController = (function () {
             
             // Insert item
             document.querySelector(UISelectors.itemList).insertAdjacentElement('beforeend', li);
-            
+        },
+        clearInput: function () {
+            document.querySelector(UISelectors.itemNameInput).value = '';
+            document.querySelector(UISelectors.itemCaloriesInput).value = '';
         }
     }
 })();
@@ -135,10 +138,16 @@ let AppController = (function (ItemController, UIController) {
             // Check for name and calories input
             if (input.name !== '' && input.calories !== '') {
                 // console.log(input.name, input.calories); 
+                
                 // Add item
                 let newItem = ItemController.addItem(input.name, input.calories);
+                
                 // Add item to UI list
                 UIController.addListItem(newItem);
+
+                // Clear input fields
+                UIController.clearInput();
+
             }
             
             e.preventDefault();
