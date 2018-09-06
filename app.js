@@ -14,9 +14,9 @@ let ItemController = (function () {
     // Data Structure
     let data = {
         items: [
-            { id: 0, name: 'Pop Corn', calories: 960 },
-            { id: 1, name: 'Stew', calories: 1200 },
-            { id: 2, name: 'Cerial', calories: 600 }
+            // { id: 0, name: 'Pop Corn', calories: 960 },
+            // { id: 1, name: 'Stew', calories: 1200 },
+            // { id: 2, name: 'Cerial', calories: 600 }
         ],
         currentItem: null,
         totalCalories: 0
@@ -95,6 +95,9 @@ let UIController = (function () {
             }
         },
         addListItem: function (item) {
+            // Show list
+            document.querySelector(UISelectors.itemList).style.display = 'block';
+            
             // Create li element
             let li = document.createElement('li');
             
@@ -116,6 +119,9 @@ let UIController = (function () {
         clearInput: function () {
             document.querySelector(UISelectors.itemNameInput).value = '';
             document.querySelector(UISelectors.itemCaloriesInput).value = '';
+        },
+        hideList : function () {
+            document.querySelector(UISelectors.itemList).style.display = 'none';
         }
     }
 })();
@@ -162,8 +168,13 @@ let AppController = (function (ItemController, UIController) {
             // Fetch items from data structure
             let items = ItemController.getItems();
 
-            // Populate list with items
-            UIController.populateItemList(items);
+            // Check if any items
+            if (items.length === 0) {
+                UIController.hideList();
+            } else {
+                 // Populate list with items
+                UIController.populateItemList(items);
+            }
 
             // Load event listeners
             loadEventListeners();
