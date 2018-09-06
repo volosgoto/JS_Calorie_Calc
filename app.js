@@ -42,9 +42,9 @@ let ItemController = (function () {
 // UI COntroller
 let UIController = (function () {
     let UISelectors = {
-        itemList: '#item-list'
+        itemList: '#item-list',
+        addBtn: '.add-btn'
     };
-
 
     // Public methods
     return {
@@ -63,6 +63,9 @@ let UIController = (function () {
             });
             // Insert li to ul
             document.querySelector(UISelectors.itemList).innerHTML = html;
+        }, 
+        getSelectors: function () {
+            return UISelectors;
         }
     }
 })();
@@ -70,7 +73,23 @@ let UIController = (function () {
 
 // App Controller
 let AppController = (function (ItemController, UIController) {
-    
+    // Load event listeners
+    let loadEventListeners = ()=>{
+        // Get IU selectors
+        let UISelectors = UIController.getSelectors();
+
+        // Add item event
+        document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddFubmit);
+        // Add item sumbit
+        function itemAddFubmit(e) {
+            console.log('Add Meal');
+            
+            e.preventDefault();
+        }
+
+
+    };
+
     // Public methods
     return {
         init: function () {
@@ -81,6 +100,9 @@ let AppController = (function (ItemController, UIController) {
 
             // Populate list with items
             UIController.populateItemList(items);
+
+            // Load event listeners
+            loadEventListeners();
         }
     }
 })(ItemController, UIController);
