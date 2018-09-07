@@ -198,6 +198,9 @@ let AppController = (function (ItemController, UIController) {
     return {
         init: function () {
             // console.log('Init App...');
+            
+            // Claer edit state / set initial state
+            UIController.clearEditState();
 
             // Fetch items from data structure
             let items = ItemController.getItems();
