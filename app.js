@@ -27,7 +27,6 @@ let ItemController = (function () {
         getItems: function () {
             return data.items;
         },
-
         addItem : function (name, calories) {
             // console.log(name, calories);
             // Create id
@@ -50,6 +49,17 @@ let ItemController = (function () {
 
            return newItem;
         },
+        
+        getTotalCalories: function() {
+            let total = 0;
+      
+            // Loop through items
+            data.items.forEach(item => (total += item.calories));
+      
+            data.totalCalories = total;
+      
+            return data.totalCalories;
+          },
 
         logData: () => {
             return data;
@@ -64,7 +74,8 @@ let UIController = (function () {
         itemList: '#item-list',
         addBtn: '.add-btn',
         itemNameInput: '#item-name',
-        itemCaloriesInput: '#item-calories'
+        itemCaloriesInput: '#item-calories',
+        totalCalories: '.total-calories',
     };
 
     // Public methods
@@ -122,7 +133,13 @@ let UIController = (function () {
         },
         hideList : function () {
             document.querySelector(UISelectors.itemList).style.display = 'none';
-        }
+        },
+
+        showTotalCalories: function(totalCalories) {
+            document.querySelector(
+              UISelectors.totalCalories,
+            ).textContent = totalCalories;
+          }
     }
 })();
 
@@ -151,11 +168,16 @@ let AppController = (function (ItemController, UIController) {
                 // Add item to UI list
                 UIController.addListItem(newItem);
 
+                // Get total calories
+                let totalCalories = ItemController.getTotalCalories();
+
+                // Add total calorie to UI
+
+                UIController.showTotalCalories(totalCalories);
+
                 // Clear input fields
                 UIController.clearInput();
-
             }
-            
             e.preventDefault();
         }
     };
@@ -178,7 +200,7 @@ let AppController = (function (ItemController, UIController) {
 
             // Load event listeners
             loadEventListeners();
-        }
+        } 
     }
 })(ItemController, UIController);
 
