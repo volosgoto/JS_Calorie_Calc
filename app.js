@@ -62,6 +62,9 @@ let ItemController = (function () {
         setCurrentItem: function (item) {
             data.currentItem = item;
         },
+        getCurrentItem: function () {
+            return data.currentItem;
+        },
         getTotalCalories: function() {
             let total = 0;
       
@@ -144,6 +147,10 @@ let UIController = (function () {
         clearInput: function () {
             document.querySelector(UISelectors.itemNameInput).value = '';
             document.querySelector(UISelectors.itemCaloriesInput).value = '';
+        },
+        addItemToForm: function () {
+            document.querySelector(UISelectors.itemNameInput).value = ItemController.getCurrentItem().name;
+            document.querySelector(UISelectors.itemCaloriesInput).value = ItemController.getCurrentItem().calories;
         },
         hideList : function () {
             document.querySelector(UISelectors.itemList).style.display = 'none';
@@ -229,6 +236,9 @@ let AppController = (function (ItemController, UIController) {
 
             // Set item
             ItemController.setCurrentItem(itemToEdit);
+
+            // Add item to form
+            UIController.addItemToForm();
              
             
 
