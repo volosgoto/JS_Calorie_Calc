@@ -49,7 +49,7 @@ let ItemController = (function () {
 
            return newItem;
         },
-        
+
         getTotalCalories: function() {
             let total = 0;
       
@@ -66,13 +66,18 @@ let ItemController = (function () {
         }
     }
 })();
+// Item Controller END
 
 
-// UI COntroller
+// UI Controller
 let UIController = (function () {
     let UISelectors = {
         itemList: '#item-list',
         addBtn: '.add-btn',
+        updateBtn: '.update-btn',
+        deleteBtn: '.delete-btn',
+        backBtn: '.back-btn',
+        clearBtn: '.clear-btn',
         itemNameInput: '#item-name',
         itemCaloriesInput: '#item-calories',
         totalCalories: '.total-calories',
@@ -96,9 +101,6 @@ let UIController = (function () {
             // Insert li to ul
             document.querySelector(UISelectors.itemList).innerHTML = html;
         }, 
-        getSelectors: function () {
-            return UISelectors;
-        },
         getItemInput : function () {
             return {
                 name: document.querySelector(UISelectors.itemNameInput).value,
@@ -134,14 +136,24 @@ let UIController = (function () {
         hideList : function () {
             document.querySelector(UISelectors.itemList).style.display = 'none';
         },
-
         showTotalCalories: function(totalCalories) {
             document.querySelector(
               UISelectors.totalCalories,
             ).textContent = totalCalories;
-          }
+        },
+        clearEditState: function () {
+          
+          
+            UIController.clearInput();
+
+
+        },
+        getSelectors: function () {
+            return UISelectors;
+        },
     }
 })();
+// UI COntroller END
 
 
 // App Controller
@@ -172,7 +184,6 @@ let AppController = (function (ItemController, UIController) {
                 let totalCalories = ItemController.getTotalCalories();
 
                 // Add total calorie to UI
-
                 UIController.showTotalCalories(totalCalories);
 
                 // Clear input fields
@@ -198,11 +209,18 @@ let AppController = (function (ItemController, UIController) {
                 UIController.populateItemList(items);
             }
 
+            // Get total calories
+            let totalCalories = ItemController.getTotalCalories();
+
+            // Add total calorie to UI
+            UIController.showTotalCalories(totalCalories);
+
             // Load event listeners
             loadEventListeners();
         } 
     }
 })(ItemController, UIController);
+// App Controller END
 
 
 // Init App
