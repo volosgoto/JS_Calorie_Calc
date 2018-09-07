@@ -200,7 +200,22 @@ let AppController = (function (ItemController, UIController) {
 
     // Update item submit
     let itemUpdateSubmit = function (e) {
-        console.log('Test');
+        // console.log('Test');
+        if (e.target.classList.contains('edit-item')) {
+             // Get list item id
+            const listId = e.target.parentNode.parentNode.id;
+
+            // Break into array
+            let listIdArr = listId.split('-');
+
+
+            // Get actual id
+            let id = parseInt(listIdArr[1]);
+
+            console.log(id);
+            
+
+        }
 
         e.preventDefault();
     }
