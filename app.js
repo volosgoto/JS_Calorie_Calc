@@ -49,7 +49,19 @@ let ItemController = (function () {
 
            return newItem;
         },
-
+        getItemById: function(id) {
+            let found = null;
+            // Loop throuhtitems
+            data.items.forEach((item)=>{
+                if (item.id === id) {
+                    found = item;
+                }
+            }); 
+            return found;
+        },
+        setCurrentItem: function (item) {
+            data.currentItem = item;
+        },
         getTotalCalories: function() {
             let total = 0;
       
@@ -154,7 +166,7 @@ let UIController = (function () {
         },
     }
 })();
-// UI COntroller END
+// UI Controller END
 
 
 // App Controller
@@ -212,7 +224,12 @@ let AppController = (function (ItemController, UIController) {
             // Get actual id
             let id = parseInt(listIdArr[1]);
 
-            console.log(id);
+            // Get item
+            let itemToEdit = ItemController.getItemById(id);
+
+            // Set item
+            ItemController.setCurrentItem(itemToEdit);
+             
             
 
         }
