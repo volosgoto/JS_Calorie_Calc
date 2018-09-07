@@ -166,6 +166,10 @@ let AppController = (function (ItemController, UIController) {
 
         // Add item event
         document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
+
+        //  Edit icin click event
+        document.querySelector(UISelectors.itemList).addEventListener('click', itemUpdateSubmit);
+
         // Add item sumbit
         function itemAddSubmit(e) {
             // console.log('Add Meal');
@@ -194,11 +198,19 @@ let AppController = (function (ItemController, UIController) {
         }
     };
 
+    // Update item submit
+    let itemUpdateSubmit = function (e) {
+        console.log('Test');
+
+        e.preventDefault();
+    }
+
+
     // Public methods
     return {
         init: function () {
             // console.log('Init App...');
-            
+
             // Claer edit state / set initial state
             UIController.clearEditState();
 
