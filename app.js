@@ -27,7 +27,6 @@ let ItemController = (function () {
         getItems: function () {
             return data.items;
         },
-
         addItem : function (name, calories) {
             // console.log(name, calories);
             // Create id
@@ -50,21 +49,53 @@ let ItemController = (function () {
 
            return newItem;
         },
+        getItemById: function(id) {
+            let found = null;
+            // Loop throuhtitems
+            data.items.forEach((item)=>{
+                if (item.id === id) {
+                    found = item;
+                }
+            }); 
+            return found;
+        },
+        setCurrentItem: function (item) {
+            data.currentItem = item;
+        },
+        getCurrentItem: function () {
+            return data.currentItem;
+        },
+        getTotalCalories: function() {
+            let total = 0;
+      
+            // Loop through items
+            data.items.forEach(item => (total += item.calories));
+      
+            data.totalCalories = total;
+      
+            return data.totalCalories;
+          },
 
         logData: () => {
             return data;
         }
     }
 })();
+// Item Controller END
 
 
-// UI COntroller
+// UI Controller
 let UIController = (function () {
     let UISelectors = {
         itemList: '#item-list',
         addBtn: '.add-btn',
+        updateBtn: '.update-btn',
+        deleteBtn: '.delete-btn',
+        backBtn: '.back-btn',
+        clearBtn: '.clear-btn',
         itemNameInput: '#item-name',
-        itemCaloriesInput: '#item-calories'
+        itemCaloriesInput: '#item-calories',
+        totalCalories: '.total-calories',
     };
 
     // Public methods
@@ -85,9 +116,6 @@ let UIController = (function () {
             // Insert li to ul
             document.querySelector(UISelectors.itemList).innerHTML = html;
         }, 
-        getSelectors: function () {
-            return UISelectors;
-        },
         getItemInput : function () {
             return {
                 name: document.querySelector(UISelectors.itemNameInput).value,
@@ -120,11 +148,41 @@ let UIController = (function () {
             document.querySelector(UISelectors.itemNameInput).value = '';
             document.querySelector(UISelectors.itemCaloriesInput).value = '';
         },
+        addItemToForm: function () {
+            document.querySelector(UISelectors.itemNameInput).value = ItemController.getCurrentItem().name;
+            document.querySelector(UISelectors.itemCaloriesInput).value = ItemController.getCurrentItem().calories;
+            UIController.showEditState();
+        },
         hideList : function () {
             document.querySelector(UISelectors.itemList).style.display = 'none';
-        }
+        },
+        showTotalCalories: function(totalCalories) {
+            document.querySelector(
+              UISelectors.totalCalories,
+            ).textContent = totalCalories;
+        },
+        clearEditState: function () {
+            UIController.clearInput();
+            document.querySelector(UISelectors.updateBtn).style.display = 'none';
+            document.querySelector(UISelectors.deleteBtn).style.display = 'none';
+            document.querySelector(UISelectors.backBtn).style.display = 'none'; 
+            document.querySelector(UISelectors.addBtn).style.display = 'inline'; 
+
+        },
+        showEditState: function () {
+            UIController.clearInput();
+            document.querySelector(UISelectors.updateBtn).style.display = 'inline';
+            document.querySelector(UISelectors.deleteBtn).style.display = 'inline';
+            document.querySelector(UISelectors.backBtn).style.display = 'inline'; 
+            document.querySelector(UISelectors.addBtn).style.display = 'none'; 
+
+        },
+        getSelectors: function () {
+            return UISelectors;
+        },
     }
 })();
+// UI Controller END
 
 
 // App Controller
@@ -136,6 +194,10 @@ let AppController = (function (ItemController, UIController) {
 
         // Add item event
         document.querySelector(UISelectors.addBtn).addEventListener('click', itemAddSubmit);
+
+        //  Edit icin click event
+        document.querySelector(UISelectors.itemList).addEventListener('click', itemUpdateSubmit);
+
         // Add item sumbit
         function itemAddSubmit(e) {
             // console.log('Add Meal');
@@ -151,19 +213,57 @@ let AppController = (function (ItemController, UIController) {
                 // Add item to UI list
                 UIController.addListItem(newItem);
 
+                // Get total calories
+                let totalCalories = ItemController.getTotalCalories();
+
+                // Add total calorie to UI
+                UIController.showTotalCalories(totalCalories);
+
                 // Clear input fields
                 UIController.clearInput();
-
             }
-            
             e.preventDefault();
         }
     };
+
+    // Update item submit
+    let itemUpdateSubmit = function (e) {
+        // console.log('Test');
+        if (e.target.classList.contains('edit-item')) {
+             // Get list item id
+            const listId = e.target.parentNode.parentNode.id;
+
+            // Break into array
+            let listIdArr = listId.split('-');
+
+
+            // Get actual id
+            let id = parseInt(listIdArr[1]);
+
+            // Get item
+            let itemToEdit = ItemController.getItemById(id);
+
+            // Set item
+            ItemController.setCurrentItem(itemToEdit);
+
+            // Add item to form
+            UIController.addItemToForm();
+             
+            
+
+        }
+
+        e.preventDefault();
+    }
+
 
     // Public methods
     return {
         init: function () {
             // console.log('Init App...');
+
+            // Claer edit state / set initial state
+            UIController.clearEditState();
 
             // Fetch items from data structure
             let items = ItemController.getItems();
@@ -176,11 +276,18 @@ let AppController = (function (ItemController, UIController) {
                 UIController.populateItemList(items);
             }
 
+            // Get total calories
+            let totalCalories = ItemController.getTotalCalories();
+
+            // Add total calorie to UI
+            UIController.showTotalCalories(totalCalories);
+
             // Load event listeners
             loadEventListeners();
-        }
+        } 
     }
 })(ItemController, UIController);
+// App Controller END
 
 
 // Init App
