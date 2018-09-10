@@ -83,6 +83,9 @@ const ItemCtrl = (function () {
       // Remove item
       data.items.splice(index, 1)
     },
+    clearAllItems: function () {
+      data.items = []
+    },
     setCurrentItem: function (item) {
       data.currentItem = item
     },
@@ -202,6 +205,16 @@ const UICtrl = (function () {
         UISelectors.itemCaloriesInput
       ).value = ItemCtrl.getCurrentItem().calories
       UICtrl.showEditState()
+    },
+    removeItems: function () {
+      let listItems = document.querySelectorAll(UISelectors.listItems)
+
+      // Turn Node list into array
+      listItems = Array.from(listItems)
+
+      listItems.forEach(function (item) {
+        item.remove()
+      })
     },
     hideList: function () {
       document.querySelector(UISelectors.itemList).style.display = 'none'
