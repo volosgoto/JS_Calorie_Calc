@@ -70,6 +70,18 @@ const ItemCtrl = (function () {
       })
       return found
     },
+    deleteItem: function (id) {
+      // Get ids
+      const ids = data.items.map(function (item) {
+        return item.id
+      })
+
+      // Get index
+      const index = ids.indexOf(id)
+
+      // Remove item
+      data.items.splice(index, 1)
+    },
     setCurrentItem: function (item) {
       data.currentItem = item
     },
@@ -170,6 +182,11 @@ const UICtrl = (function () {
             </a>`
         }
       })
+    },
+    deleteListItem: function (id) {
+      const itemID = `#item-${id}`
+      const item = document.querySelector(itemID)
+      item.remove()
     },
     clearInput: function () {
       document.querySelector(UISelectors.itemNameInput).value = ''
