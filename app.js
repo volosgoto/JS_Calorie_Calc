@@ -1,4 +1,5 @@
 // Storage Controller
+// Storage Controller
 
 // Item Controller
 const ItemCtrl = (function () {
@@ -117,6 +118,7 @@ const UICtrl = (function () {
     updateBtn: '.update-btn',
     deleteBtn: '.delete-btn',
     backBtn: '.back-btn',
+    clearBtn: '.clear-btn',
     itemNameInput: '#item-name',
     itemCaloriesInput: '#item-calories',
     totalCalories: '.total-calories'
@@ -263,6 +265,11 @@ const App = (function (ItemCtrl, UICtrl) {
       .querySelector(UISelectors.deleteBtn)
       .addEventListener('click', itemDeleteSubmit)
 
+    // Clear items event
+    document
+      .querySelector(UISelectors.clearBtn)
+      .addEventListener('click', clearAllItemsClick)
+
     // Back button event
     document
       .querySelector(UISelectors.backBtn)
@@ -359,6 +366,23 @@ const App = (function (ItemCtrl, UICtrl) {
     UICtrl.clearEditState()
 
     e.preventDefault()
+  }
+
+  // Clear items event
+  const clearAllItemsClick = function () {
+    // Delete all items from data structure
+    ItemCtrl.clearAllItems()
+
+    // Get total calories
+    const totalCalories = ItemCtrl.getTotalCalories()
+    // Add total calories to UI
+    UICtrl.showTotalCalories(totalCalories)
+
+    // Remove from UI
+    UICtrl.removeItems()
+
+    // Hide UL
+    UICtrl.hideList()
   }
 
   // Public methods
